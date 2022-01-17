@@ -1,0 +1,78 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+string ltrim(const string &);
+string rtrim(const string &);
+
+/*
+ * Complete the 'flippingBits' function below.
+ *
+ * The function is expected to return a LONG_INTEGER.
+ * The function accepts LONG_INTEGER n as parameter.
+ */
+
+long flippingBits(long n) {
+    long answer = 0;
+    long powers[32];
+    powers[0] = 1;
+    for (int j=1; j<32; j++){
+        powers[j]=powers[j-1]*2;
+    }
+    for (int j=31; j>=0; j--){
+        if (n<powers[j]){//bit is 0
+            answer+=powers[j]; //bit is 1
+        }
+        else{//bit is 1
+            n-=powers[j];
+        }
+    }
+    return answer;
+}
+
+int main()
+{
+    ofstream fout(getenv("OUTPUT_PATH"));
+
+    string q_temp;
+    getline(cin, q_temp);
+
+    int q = stoi(ltrim(rtrim(q_temp)));
+
+    for (int q_itr = 0; q_itr < q; q_itr++) {
+        string n_temp;
+        getline(cin, n_temp);
+
+        long n = stol(ltrim(rtrim(n_temp)));
+
+        long result = flippingBits(n);
+
+        fout << result << "\n";
+    }
+
+    fout.close();
+
+    return 0;
+}
+
+string ltrim(const string &str) {
+    string s(str);
+
+    s.erase(
+        s.begin(),
+        find_if(s.begin(), s.end(), not1(ptr_fun<int, int>(isspace)))
+    );
+
+    return s;
+}
+
+string rtrim(const string &str) {
+    string s(str);
+
+    s.erase(
+        find_if(s.rbegin(), s.rend(), not1(ptr_fun<int, int>(isspace))).base(),
+        s.end()
+    );
+
+    return s;
+}
