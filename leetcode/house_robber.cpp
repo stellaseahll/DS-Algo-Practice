@@ -1,5 +1,5 @@
 class Solution {
-public: // Start : 3:56 PM
+public: 
     int max(int a, int b){
         if (a>=b){return a;}
         return b;
